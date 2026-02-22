@@ -1,1 +1,34 @@
-.venv/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Datasets and Models (Ignore large files to prevent Git LFS issues)
+# Note: If you want to push your models/datasets, you can comment these out
+src/ml/models/*.pkl
+src/ml/models/*.h5
+src/ml/models/*.joblib
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

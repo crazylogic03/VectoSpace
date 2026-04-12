@@ -8,9 +8,17 @@ import json
 
 # ── Path setup ──────────────────────────────────────────────────────────────
 ROOT = os.path.dirname(__file__)
+sys.path.insert(0, ROOT)                               # expose rag/ package
 sys.path.insert(0, os.path.join(ROOT, "src", "ml"))
 from recommender import generate_recommendations
 from agent.diagnosis import run_diagnosis_node, DiagnosisReport
+
+# ── RAG retriever (Developer 3) ──────────────────────────────────────────────
+try:
+    from rag.retriever import retrieve_resources_for_gaps
+    RAG_AVAILABLE = True
+except ImportError:
+    RAG_AVAILABLE = False
 
 # ── Paths ────────────────────────────────────────────────────────────────────
 MODEL_DIR = os.path.join(ROOT, "src", "ml", "models")
@@ -130,6 +138,84 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
     border-radius: 999px;
     background: linear-gradient(90deg, #6366f1, #22d3ee);
 }
+
+/* ── Resource cards (RAG) ── */
+.resource-card {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-bottom: .75rem;
+    transition: border-color .2s;
+}
+.resource-card:hover { border-color: #6366f1; }
+.resource-card .rc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: .5rem;
+    margin-bottom: .45rem;
+}
+.resource-card .rc-title {
+    font-size: .95rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin: 0;
+}
+.resource-card .rc-title a {
+    color: #818cf8;
+    text-decoration: none;
+}
+.resource-card .rc-title a:hover { text-decoration: underline; }
+.resource-card .rc-summary {
+    font-size: .83rem;
+    color: #94a3b8;
+    margin: .35rem 0 .5rem 0;
+    line-height: 1.55;
+}
+.resource-card .rc-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+    align-items: center;
+}
+.rc-score-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    font-size: .75rem;
+    color: #64748b;
+}
+.rc-score-fill {
+    display: inline-block;
+    height: 5px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #6366f1, #22d3ee);
+}
+.rc-gap-group {
+    margin-bottom: 1.1rem;
+}
+.rc-gap-label {
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    opacity: .5;
+    margin-bottom: .4rem;
+}
+/* ── RAG status pill ── */
+.rag-status {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    font-size: .78rem;
+    font-weight: 600;
+    padding: .2rem .65rem;
+    border-radius: 999px;
+    border: 1px solid;
+}
+.rag-on  { color: #34d399; background: #05190f; border-color: #34d39955; }
+.rag-off { color: #64748b; background: #1e293b; border-color: #33415555; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -138,7 +224,7 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 # ═══════════════════════════════════════════════════════════════════════════════
 with st.sidebar:
     st.markdown("## 🎓 VectoSpace")
-    st.caption("Student Performance · Diagnosis Engine")
+    st.caption("Student Performance · Diagnosis + RAG Engine")
     st.markdown("---")
 
     # ── LLM toggle ────────────────────────────────────────────────────────────
@@ -152,6 +238,36 @@ with st.sidebar:
         st.info("🤖 LLM mode — Gemini / GPT-4o will enrich the diagnosis.", icon="✨")
     else:
         st.info("📐 Rule-based mode — fast, deterministic, no API key needed.", icon="⚡")
+
+    st.markdown("---")
+
+    # ── RAG Resource Retrieval toggle ─────────────────────────────────────────
+    st.markdown("### 📚 Resource Retrieval (RAG)")
+    if RAG_AVAILABLE:
+        use_rag = st.toggle(
+            "Enable RAG Resource Retrieval",
+            value=True,
+            help="Retrieves personalised learning resources for each detected gap using semantic search over a curated educational corpus.",
+        )
+        rag_use_llm_summary = st.toggle(
+            "LLM-generated resource summaries",
+            value=False,
+            help="When enabled, uses Gemini/GPT-4o to write a tailored summary for each resource. Falls back to template if no API key is set.",
+        )
+        rag_top_k = st.slider(
+            "Resources per gap",
+            min_value=1, max_value=5, value=3,
+            help="Number of resources retrieved per learning gap.",
+        )
+        if use_rag:
+            st.markdown('<span class="rag-status rag-on">🟢 RAG Active</span>', unsafe_allow_html=True)
+        else:
+            st.markdown('<span class="rag-status rag-off">⚪ RAG Disabled</span>', unsafe_allow_html=True)
+    else:
+        use_rag = False
+        rag_use_llm_summary = False
+        rag_top_k = 3
+        st.warning("⚠️ RAG package not found. Run `pip install -r requirements.txt` to enable resource retrieval.", icon="📦")
 
     st.markdown("---")
 
@@ -172,7 +288,8 @@ with st.sidebar:
     st.markdown("### 📂 About")
     st.markdown(
         "Upload a student CSV file to get **ML-powered grade predictions**, "
-        "**learning gap diagnosis**, and **personalised study recommendations**."
+        "**learning gap diagnosis**, **RAG-powered resource retrieval**, "
+        "and **personalised study recommendations**."
     )
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -182,10 +299,10 @@ st.markdown("""
 <div style="padding:1.5rem 0 1rem 0;">
   <h1 style="margin:0;font-size:2rem;font-weight:700;">
     🎓 Student Performance Predictor
-    <span style="font-size:1rem;font-weight:400;opacity:.5;margin-left:.5rem;">+ Diagnosis Engine</span>
+    <span style="font-size:1rem;font-weight:400;opacity:.5;margin-left:.5rem;">+ Diagnosis · RAG Engine</span>
   </h1>
   <p style="opacity:.55;margin:.3rem 0 0 0;">
-    Upload student data · Get grade predictions · Identify learning gaps · Generate personalised actions
+    Upload student data · Get grade predictions · Identify learning gaps · Retrieve learning resources · Generate personalised actions
   </p>
 </div>
 """, unsafe_allow_html=True)
@@ -209,21 +326,21 @@ def preprocess_raw_data(df, scaler, scale_cols):
     if "student_id"  in df.columns: df.drop(columns=["student_id"],  inplace=True)
     if "final_grade" in df.columns: df.drop(columns=["final_grade"], inplace=True)
 
-    for col in df.select_dtypes(include="object").columns:
+    for col in df.select_dtypes(exclude="number").columns:
         df[col] = df[col].astype(str).str.strip().str.lower()
 
     binary_map = {"yes": 1, "no": 0}
     for col in ["internet_access", "extra_activities"]:
-        if col in df.columns and df[col].dtype == "object":
+        if col in df.columns and not pd.api.types.is_numeric_dtype(df[col]):
             df[col] = df[col].map(binary_map).fillna(0).astype(int)
 
     travel_map = {"<15 min": 0, "15-30 min": 1, "30-60 min": 2, ">60 min": 3}
-    if "travel_time" in df.columns and df["travel_time"].dtype == "object":
+    if "travel_time" in df.columns and not pd.api.types.is_numeric_dtype(df["travel_time"]):
         df["travel_time"] = df["travel_time"].map(travel_map).fillna(0).astype(int)
 
     edu_map = {"no formal": 0, "high school": 1, "diploma": 2,
                "graduate": 3, "post graduate": 4, "phd": 5}
-    if "parent_education" in df.columns and df["parent_education"].dtype == "object":
+    if "parent_education" in df.columns and not pd.api.types.is_numeric_dtype(df["parent_education"]):
         df["parent_education"] = df["parent_education"].map(edu_map).fillna(0).astype(int)
 
     nominal_cols = [c for c in ["gender", "school_type", "study_method"] if c in df.columns]
@@ -243,6 +360,85 @@ def preprocess_raw_data(df, scaler, scale_cols):
 def _status_pill(label: str, color: str) -> str:
     return f'<span class="pill" style="background:{color}22;color:{color};border:1px solid {color}55;">{label}</span>'
 
+
+# ─────────────────────────────────────────────────────────────────────────────
+# RAG RESOURCE RENDERER
+# ─────────────────────────────────────────────────────────────────────────────
+
+_DOMAIN_ICON = {
+    "Mathematics": "📐",
+    "Science":     "🔬",
+    "English":     "📖",
+    "Attendance":  "🗓️",
+    "Study Time":  "⏱️",
+}
+
+def _render_resources(resources: list[dict]):
+    """Render RAG-retrieved resources grouped by learning gap."""
+    if not resources:
+        st.info("No resources retrieved — either no gaps were identified or RAG is disabled.", icon="📭")
+        return
+
+    # Group by gap area
+    from collections import defaultdict
+    grouped: dict = defaultdict(list)
+    for r in resources:
+        grouped[r.get("gap", "General")].append(r)
+
+    for gap_area, items in grouped.items():
+        sev      = items[0].get("severity", "Moderate")
+        sev_col  = SEVERITY_COLOR.get(sev, "#94a3b8")
+        area_icon = _DOMAIN_ICON.get(gap_area, "📚")
+
+        st.markdown(
+            f'<div class="rc-gap-label" style="color:{sev_col};">{area_icon} {gap_area} '
+            f'<span style="opacity:.6;font-weight:400;">({sev})</span></div>',
+            unsafe_allow_html=True,
+        )
+
+        for r in items:
+            score     = float(r.get("score", 0))
+            score_pct = min(int(score * 100), 100)   # raw cosine → %
+            score_bar = (
+                f'<span class="rc-score-bar">'  
+                f'<span class="rc-score-fill" style="width:{score_pct}px;"></span>'
+                f'{score:.3f}</span>'
+            )
+
+            # Severity pill
+            sev_pill = (
+                f'<span class="pill" style="background:{sev_col}22;color:{sev_col};'
+                f'border:1px solid {sev_col}44;font-size:.7rem;">{sev}</span>'
+            )
+
+            title_html = (
+                f'<a href="{r["url"]}" target="_blank" rel="noopener noreferrer">'
+                f'{r["title"]}</a>'
+            )
+
+            st.markdown(
+                f"""
+                <div class="resource-card">
+                  <div class="rc-header">
+                    <p class="rc-title">{title_html}</p>
+                    <div style="white-space:nowrap;">{sev_pill}</div>
+                  </div>
+                  <p class="rc-summary">{r['summary']}</p>
+                  <div class="rc-meta">
+                    {score_bar}
+                    <span style="font-size:.73rem;color:#334155;">relevance score</span>
+                  </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+        st.markdown("<div style='height:.5rem'></div>", unsafe_allow_html=True)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# DIAGNOSIS + RESOURCES RENDERER
+# ─────────────────────────────────────────────────────────────────────────────
 
 def _render_diagnosis(report: DiagnosisReport, row_raw: pd.Series):
     """Render a full DiagnosisReport inside a rich Streamlit layout."""
@@ -291,8 +487,8 @@ def _render_diagnosis(report: DiagnosisReport, row_raw: pd.Series):
     )
 
     # ── Tabs ──────────────────────────────────────────────────────────────────
-    tab_gaps, tab_strengths, tab_actions, tab_raw = st.tabs(
-        ["🔴 Learning Gaps", "✅ Strengths", "🚀 Priority Actions", "📄 Raw Report"]
+    tab_gaps, tab_strengths, tab_actions, tab_resources, tab_raw = st.tabs(
+        ["🔴 Learning Gaps", "✅ Strengths", "🚀 Priority Actions", "📚 Resources", "📄 Raw Report"]
     )
 
     # ── Tab 1: Learning Gaps ──────────────────────────────────────────────────
@@ -346,7 +542,17 @@ def _render_diagnosis(report: DiagnosisReport, row_raw: pd.Series):
                 unsafe_allow_html=True,
             )
 
-    # ── Tab 4: Raw JSON ───────────────────────────────────────────────────────
+    # ── Tab 4: Resources (placeholder — filled by caller) ────────────────────
+    # The actual content is injected by the caller via st.session_state
+    # so that we can pass resources without re-running the Retrieval Node.
+    with tab_resources:
+        resources = st.session_state.get(f"_resources_{report.student_id}_{id(report)}", None)
+        if resources is None:
+            st.info("📡 Enable **RAG Resource Retrieval** in the sidebar and re-run diagnosis to see personalised resources here.", icon="📚")
+        else:
+            _render_resources(resources)
+
+    # ── Tab 5: Raw JSON ───────────────────────────────────────────────────────
     with tab_raw:
         report_dict = report.to_dict()
         st.json(report_dict, expanded=False)
@@ -383,7 +589,7 @@ original_df = raw_df.copy()
 model, scaler, scale_cols = load_model()
 
 # ── Preprocess ────────────────────────────────────────────────────────────────
-has_strings  = raw_df.select_dtypes(include="object").shape[1] > 0
+has_strings  = raw_df.select_dtypes(exclude="number").shape[1] > 0
 processed_df = preprocess_raw_data(raw_df, scaler, scale_cols) if has_strings else raw_df.copy()
 if "final_grade" in processed_df.columns:
     processed_df.drop(columns=["final_grade"], inplace=True)
@@ -565,7 +771,37 @@ with tab_search:
                     use_llm         = use_llm,
                 )
 
+            # ── RAG Retrieval ──────────────────────────────────────────────────
+            resources: list = []
+            if use_rag and RAG_AVAILABLE and report.learning_gaps:
+                with st.spinner("📡 Retrieving personalised learning resources…"):
+                    try:
+                        gaps_dicts = [g.to_dict() for g in report.learning_gaps]
+                        resources  = retrieve_resources_for_gaps(
+                            learning_gaps = gaps_dicts,
+                            use_llm       = rag_use_llm_summary,
+                            top_k         = rag_top_k,
+                        )
+                    except Exception as rag_err:
+                        st.warning(f"RAG retrieval encountered an error: {rag_err}", icon="⚠️")
+
+            # Store resources in session state so _render_diagnosis can find them
+            res_key = f"_resources_{report.student_id}_{id(report)}"
+            st.session_state[res_key] = resources if (use_rag and RAG_AVAILABLE) else None
+
             _render_diagnosis(report, row)
+
+            # ── RAG Resource count banner (outside tabs) ───────────────────────
+            if use_rag and RAG_AVAILABLE:
+                if resources:
+                    st.success(
+                        f"📚 **{len(resources)} learning resource(s)** retrieved for "
+                        f"{len(report.learning_gaps)} identified gap(s). "
+                        f"See the **Resources** tab above.",
+                        icon="✅",
+                    )
+                elif report.learning_gaps:
+                    st.info("RAG retrieval returned no results — try lowering the relevance threshold.", icon="📭")
 
             # ── Legacy recommendations (collapsible) ──────────────────────────
             with st.expander("💡 Quick Study Recommendations (rule-based)", expanded=False):

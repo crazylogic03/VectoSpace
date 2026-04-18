@@ -1,0 +1,226 @@
+[
+  {
+    "title": "Khan Academy – Mathematics",
+    "url": "https://www.khanacademy.org/math",
+    "domain": [
+      "Mathematics",
+      "math"
+    ],
+    "summary": "Free, self-paced video lessons and practice exercises covering arithmetic, algebra, geometry, trigonometry, and calculus. Ideal for building foundational mathematics skills from scratch."
+  },
+  {
+    "title": "Paul's Online Math Notes",
+    "url": "https://tutorial.math.lamar.edu/",
+    "domain": [
+      "Mathematics",
+      "math",
+      "calculus",
+      "algebra"
+    ],
+    "summary": "Comprehensive, exam-friendly notes and worked examples for Algebra, Calculus I–III, Differential Equations, and Linear Algebra. Especially useful for university-level mathematics."
+  },
+  {
+    "title": "Brilliant – Math Courses",
+    "url": "https://brilliant.org/courses/math/",
+    "domain": [
+      "Mathematics",
+      "math",
+      "problem solving"
+    ],
+    "summary": "Interactive problem-solving courses in mathematics and logic. Brilliant's guided approach teaches reasoning rather than rote memorisation, reinforcing deep conceptual understanding."
+  },
+  {
+    "title": "MIT OpenCourseWare – Mathematics",
+    "url": "https://ocw.mit.edu/courses/mathematics/",
+    "domain": [
+      "Mathematics",
+      "math",
+      "linear algebra",
+      "calculus"
+    ],
+    "summary": "Free MIT lecture notes, assignments, and exams for undergraduate mathematics courses including Single-Variable Calculus, Linear Algebra, and Probability & Statistics."
+  },
+  {
+    "title": "Wolfram MathWorld",
+    "url": "https://mathworld.wolfram.com/",
+    "domain": [
+      "Mathematics",
+      "math",
+      "reference"
+    ],
+    "summary": "The web's most extensive mathematics encyclopedia, covering definitions, theorems, and examples across all branches of mathematics. Best used as a quick reference while studying."
+  },
+  {
+    "title": "Khan Academy – Science",
+    "url": "https://www.khanacademy.org/science",
+    "domain": [
+      "Science",
+      "physics",
+      "chemistry",
+      "biology"
+    ],
+    "summary": "Free video lessons and practice quizzes covering biology, chemistry, physics, and Earth sciences at secondary and introductory university levels."
+  },
+  {
+    "title": "CK-12 – Science Flexbooks",
+    "url": "https://www.ck12.org/student/",
+    "domain": [
+      "Science",
+      "physics",
+      "chemistry",
+      "biology"
+    ],
+    "summary": "Open-source, customisable digital textbooks aligned to school curricula. Includes simulations, videos, and adaptive practice for physics, chemistry, biology, and earth science."
+  },
+  {
+    "title": "PhET Interactive Science Simulations",
+    "url": "https://phet.colorado.edu/",
+    "domain": [
+      "Science",
+      "physics",
+      "chemistry"
+    ],
+    "summary": "Free, research-based science simulations from the University of Colorado. Students can experiment with physics, chemistry, and earth science concepts interactively without any lab equipment."
+  },
+  {
+    "title": "NCBI – Biology and Life Sciences Resources",
+    "url": "https://www.ncbi.nlm.nih.gov/education/",
+    "domain": [
+      "Science",
+      "biology",
+      "life sciences"
+    ],
+    "summary": "Educational resources from the National Center for Biotechnology Information, including tutorials on genetics, genomics, and molecular biology for students and educators."
+  },
+  {
+    "title": "British Council – LearnEnglish",
+    "url": "https://learnenglish.britishcouncil.org/",
+    "domain": [
+      "English",
+      "language",
+      "grammar",
+      "writing"
+    ],
+    "summary": "Free English learning resources from the British Council: grammar explanations, listening exercises, reading passages, and writing guides suitable for all proficiency levels."
+  },
+  {
+    "title": "Purdue OWL – Writing and Grammar",
+    "url": "https://owl.purdue.edu/owl/general_writing/",
+    "domain": [
+      "English",
+      "writing",
+      "grammar",
+      "academic writing"
+    ],
+    "summary": "The Purdue Online Writing Lab is the definitive reference for academic writing, grammar rules, citation formats (APA, MLA), and essay structure. Invaluable for assignments and exams."
+  },
+  {
+    "title": "BBC Learning English",
+    "url": "https://www.bbc.co.uk/learningenglish/",
+    "domain": [
+      "English",
+      "language",
+      "vocabulary",
+      "listening"
+    ],
+    "summary": "Daily grammar tips, vocabulary lessons, and real-world English from the BBC. Audio and video content makes it ideal for improving both written and spoken English simultaneously."
+  },
+  {
+    "title": "Project Gutenberg – Free Classic Literature",
+    "url": "https://www.gutenberg.org/",
+    "domain": [
+      "English",
+      "literature",
+      "reading"
+    ],
+    "summary": "Over 70,000 free eBooks of classic literature to improve reading comprehension and analytical skills. Reading a chapter daily is one of the most effective ways to strengthen English."
+  },
+  {
+    "title": "Coursera – Learning How to Learn",
+    "url": "https://www.coursera.org/learn/learning-how-to-learn",
+    "domain": [
+      "Attendance",
+      "Study Time",
+      "habits",
+      "productivity"
+    ],
+    "summary": "A science-backed MOOC by Barbara Oakley and Terrence Sejnowski covering memory, procrastination, and effective study techniques. Critical for students struggling with attendance or productivity."
+  },
+  {
+    "title": "Todoist – Student Planning Guide",
+    "url": "https://todoist.com/productivity-methods/student-study-plan",
+    "domain": [
+      "Study Time",
+      "Attendance",
+      "planning",
+      "organisation"
+    ],
+    "summary": "A practical guide to building a structured weekly study timetable, breaking large goals into daily tasks, and maintaining academic momentum throughout the semester using proven productivity methods."
+  },
+  {
+    "title": "Forest App – Focus & Study Timer",
+    "url": "https://www.forestapp.cc/",
+    "domain": [
+      "Study Time",
+      "focus",
+      "productivity"
+    ],
+    "summary": "A gamified Pomodoro-style timer app that helps students stay focused by growing a virtual tree during study sessions. Reduces phone distraction and builds sustained study habits."
+  },
+  {
+    "title": "Cal Newport – Study Strategies (Blog)",
+    "url": "https://calnewport.com/blog/",
+    "domain": [
+      "Study Time",
+      "Study habits",
+      "deep work"
+    ],
+    "summary": "Cal Newport's research-driven blog on deliberate practice, deep work, and effective study strategies for students. Highly recommended for improving study quality over quantity."
+  },
+  {
+    "title": "Anki – Spaced Repetition Flashcards",
+    "url": "https://apps.ankiweb.net/",
+    "domain": [
+      "Mathematics",
+      "Science",
+      "English",
+      "general",
+      "memory"
+    ],
+    "summary": "Free flashcard software using spaced-repetition algorithms to optimise long-term memorisation. Community decks are available for almost every school subject, from vocabulary to equations."
+  },
+  {
+    "title": "OpenStax – Free Peer-reviewed Textbooks",
+    "url": "https://openstax.org/subjects",
+    "domain": [
+      "Mathematics",
+      "Science",
+      "English",
+      "general"
+    ],
+    "summary": "High-quality, peer-reviewed, openly-licensed textbooks in maths, sciences, social sciences, and humanities. Fully free to read online — a direct replacement for expensive school textbooks."
+  },
+  {
+    "title": "Quizlet – Flashcards & Study Sets",
+    "url": "https://quizlet.com/",
+    "domain": [
+      "Mathematics",
+      "Science",
+      "English",
+      "general",
+      "revision"
+    ],
+    "summary": "Millions of student-created study sets for every subject. Multiple learning modes (flashcards, matching, tests) make Quizlet effective for both vocabulary building and exam revision."
+  },
+  {
+    "title": "edX – University Online Courses",
+    "url": "https://www.edx.org/",
+    "domain": [
+      "Mathematics",
+      "Science",
+      "English",
+      "general"
+    ],
+    "summary": "Online courses from top universities (MIT, Harvard, etc.) on mathematics, science, writing, and more. Many courses are free to audit, making university-level content accessible to all."
+  }
+]

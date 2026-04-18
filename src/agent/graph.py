@@ -27,11 +27,54 @@ def retrieve_node(state: AgentState):
         print(f"[Node] RAG retrieval failed ({exc}). Returning empty resources.")
         return {"resources": []}
 
-# Developer 4 will implement the real planner logic
 def planner_node(state: AgentState):
+    """
+    Real Planner Node (Developer 4).
+    """
     print("[Node] Executing planner...")
-    plan = "Mocked 4-week study plan focusing on Calculus."
-    return {"study_plan": plan, "final_report": {"status": "Complete", "plan": plan}}
+    try:
+        from agent.planner import run_planner_node
+        result = run_planner_node(state)
+        print("[Node] Planner complete.")
+        return result
+    except Exception as exc:
+        print(f"[Node] Planner failed ({exc}). Returning fallback plan.")
+        plan = "Fallback 4-week study plan focusing on Calculus."
+        return {"study_plan": plan, "final_report": {"status": "Complete", "plan": plan}}
+
+def final_report_node(state: AgentState):
+    """
+    Final Report Node (Validates against Pydantic Schema).
+    """
+    print("[Node] Assembling Final Report...")
+    from src.agent.schema import FinalReport
+    
+    rep_raw = state.get("final_report_raw")
+    gaps_raw = state.get("learning_gaps", [])
+    
+    if hasattr(gaps_raw, "to_dict"):
+        # Not standard here, fallback safety
+        gaps_dicts = [g.to_dict() for g in getattr(gaps_raw, "learning_gaps", [])]
+    else:
+        gaps_dicts = gaps_raw if isinstance(gaps_raw, list) else []
+
+    try:
+        report = FinalReport(
+            student_id="Auto",
+            student_name="Student",
+            overall_status="Generated",
+            predicted_grade="N/A",
+            goal_alignment="N/A",
+            learning_gaps=gaps_dicts,
+            strengths=[],
+            priority_actions=[],
+            study_plan_metadata=rep_raw,
+            retrieved_resources=state.get("resources", [])
+        )
+        return {"final_report": report}
+    except Exception as exc:
+        print(f"[Node] Schema validation failed: {exc}")
+        return {"final_report": None}
 
 def build_graph():
     """
@@ -43,12 +86,14 @@ def build_graph():
     workflow.add_node("diagnose", diagnose_node)
     workflow.add_node("retrieve", retrieve_node)
     workflow.add_node("plan", planner_node)
+    workflow.add_node("final_report", final_report_node)
     
     # 2. Add Edges (Linear Flow)
     workflow.set_entry_point("diagnose")
     workflow.add_edge("diagnose", "retrieve")
     workflow.add_edge("retrieve", "plan")
-    workflow.add_edge("plan", END)
+    workflow.add_edge("plan", "final_report")
+    workflow.add_edge("final_report", END)
     
     # 3. Setup checkpointer for memory
     memory = MemorySaver()

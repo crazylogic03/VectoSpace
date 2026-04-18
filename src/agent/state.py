@@ -11,4 +11,5 @@ class AgentState(TypedDict):
     learning_gaps: Optional[str]
     resources: List[Dict[str, str]]
     study_plan: Optional[str]
-    final_report: Optional[Dict[str, Any]]
+    final_report_raw: Optional[Dict[str, Any]]
+    final_report: Optional[Any] # Will hold the Pydantic Schema model

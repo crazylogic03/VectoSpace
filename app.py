@@ -27,7 +27,7 @@ try:
 except ImportError:
     RAG_AVAILABLE = False
 
-MODEL_DIR = os.path.join(ROOT, "src", "ml", "models")
+MODEL_DIR = os.path.join(ROOT, "model_artifacts")
 
 GRADE_MAP    = {0: "Grade 0", 1: "Grade 1", 2: "Grade 2",
                 3: "Grade 3", 4: "Grade 4", 5: "Grade 5"}

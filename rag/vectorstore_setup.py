@@ -41,7 +41,7 @@ logger = logging.getLogger(__name__)
 # ─────────────────────────────────────────────────────────────────────────────
 
 _ROOT = Path(__file__).resolve().parent.parent          # project root
-_DEFAULT_STORE = _ROOT / "rag" / "data"
+_DEFAULT_STORE = _ROOT / "model_artifacts"
 VECTORSTORE_PATH = Path(os.getenv("VECTORSTORE_PATH", str(_DEFAULT_STORE)))
 EMBEDDING_MODEL  = os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
 

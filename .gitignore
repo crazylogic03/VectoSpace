@@ -39,10 +39,10 @@ venv.bak/
 *.model
 *.pt
 *.pth
-model_artifacts/
-rag/data/faiss_index.pkl
-src/ml/models/*.pkl
-src/ml/models/*.png
+model_artifacts/*
+!model_artifacts/*.pkl
+!model_artifacts/*.png
+!model_artifacts/*.json
 
 # OS
 .DS_Store

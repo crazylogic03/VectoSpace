@@ -1,183 +1,191 @@
-# 🎓 VectoSpace · Student Performance Predictor + Diagnosis Engine
+# VectoSpace · Agentic AI Education Coach
 
-## Overview
-
-VectoSpace is a Streamlit-based web application that predicts student academic performance using a pre-trained Random Forest classifier, then runs a **Diagnosis Node** to identify learning gaps, evaluate goal alignment, and generate structured, evidence-based recommendations.
-
-### Core Features
-
-| Feature | Description |
-|---|---|
-| **CSV Upload** | Upload a batch of student records for bulk prediction |
-| **Grade Prediction** | Classify students into Grade 0–5 using ML (Random Forest) |
-| **Status Classification** | At-Risk → Below-Average → Average → Above-Average → High-Performing → Exceptional |
-| **🆕 Diagnosis Engine** | LLM-powered (or rule-based) learning gap analysis against student goals |
-| **🆕 Goal Alignment** | Determines if a student is Aligned / Partially Aligned / Misaligned with their goals |
-| **🆕 Severity Scoring** | Gaps rated Critical / Moderate / Minor with evidence and recommendations |
-| **🆕 Confidence Score** | Data completeness score penalised for missing key fields |
-| **Data Visualisation** | Grade and Classification distribution charts |
-| **Export Results** | Download predictions as CSV or individual diagnosis as JSON |
+VectoSpace is a production-grade educational intelligence platform that transforms raw student data into **autonomous, personalized learning journeys**. Moving beyond simple grade prediction, it leverages an **Agentic AI Orchestration** layer to diagnose learning gaps, retrieve targeted resources via **RAG**, and generate interactive study plans.
 
 ---
 
-## Project Structure
+## Key Features
 
+| Feature                      | Description                                                                             | Tech Stack                    |
+| :--------------------------- | :-------------------------------------------------------------------------------------- | :---------------------------- |
+| **Academic Prediction**   | Classifies student performance (Grade 0–5) using Random Forest.                         | Scikit-Learn, Pandas          |
+| **Status Classification** | At-Risk → Below-Average → Average → Above-Average → High-Performing → Exceptional       | Rule-based                    |
+| **Agentic Diagnosis**     | LLM-powered (or rule-based) learning gap analysis against student goals                 | LangGraph, Groq/Gemini/GPT-4o |
+| **Goal Alignment**        | Determines if a student is Aligned / Partially Aligned / Misaligned with their goals    | Rule + LLM                    |
+| **Severity Scoring**      | Gaps rated Critical / Moderate / Minor with evidence and recommendations                | Rule + LLM                    |
+| **Confidence Score**      | Data completeness score penalised for missing key fields                                | Rule-based                    |
+| **RAG Discovery**         | Semantic search across educational datasets to find targeted learning materials.        | FAISS, Sentence-Transformers  |
+| **Study Planner**         | Generates structured, multi-week study calendars tailored to student gaps.              | LangGraph                     |
+| **Practice Quizzes**      | AI-generated interactive assessments based on identified gaps and RAG resources.        | Llama-3.1, Streamlit          |
+| **AI Coach Chat**         | Conversational interface for students to interact with their diagnosis and study plans. | Groq (Llama-3.1-8B)           |
+| **Professional Exports**  | Automated PDF generation of comprehensive student success reports.                      | FPDF                          |
+
+---
+
+##  Architecture
+
+VectoSpace implements a sophisticated **Agentic Workflow** using `LangGraph`.
+
+```mermaid
+graph TD
+    A[CSV Upload] --> B[ML Prediction Node]
+    B --> C[Diagnosis Node]
+    C --> D{LLM Available?}
+    D -- Yes --> E[Agentic Gap Analysis]
+    D -- No --> F[Rule-based Inference]
+    E & F --> G[RAG Retrieval Node]
+    G --> H[Study Planner Node]
+    H --> I[Final Report Assembly]
+    I --> J[User Dashboard]
+    J --> K[AI Practice Quiz]
+    J --> L[AI Education Coach Chat]
+```
+
+### Core Components
+- **ML Engine**: Pre-trained Random Forest classifier for high-accuracy grade projection.
+- **Inference Layer**: Dual-mode (Rule-based + LLM) for robustness; falls back to deterministic rules if API keys are missing.
+- **Vector Store**: FAISS index containing curated educational resources for RAG-driven recommendations.
+- **Orchestrator**: LangGraph manages the state transition from raw performance data to a validated Pydantic FinalReport.
+
+##  Diagnosis Engine
+```text
+student_goals + performance_data
+        ↓
+Rule-based Engine (always runs)
+        ↓
+LLM (optional enhancement)
+        ↓
+Schema Validation
+        ↓
+Diagnosis Report
+```
+
+## Prompt Strategy
+
+`agent/prompts.py` implements a multi-layer prompt safety strategy:
+
+| Strategy | Implementation |
+| :--- | :--- |
+| Role priming | System prompt defines model as an "expert educational diagnostician" |
+| Schema enforcement | Exact JSON structure specified with types; model outputs strict JSON |
+| Few-shot prompting | 2 labelled examples: one At-Risk, one High-Performing |
+| Negative anchoring | Ensures model outputs [] gaps when appropriate |
+| Guardrails | Prevent hallucination, enforce structure |
+| Uncertainty hedging | `confidence_score` penalised for missing data |
+
+## DiagnosisReport Schema
+```json
+{
+  "student_id": "STU007",
+  "student_name": "Dev Patel",
+  "overall_status": "At-Risk",
+  "predicted_grade": "Grade 1",
+  "goal_alignment": "Misaligned",
+  "learning_gaps": [
+    {
+      "area": "Mathematics",
+      "severity": "Critical",
+      "evidence": "Math score is below threshold",
+      "recommendations": ["...", "...", "..."]
+    }
+  ],
+  "strengths": ["Science score is strong"],
+  "priority_actions": ["Improve attendance"],
+  "confidence_score": 0.9,
+  "diagnosis_notes": "Multiple gaps detected",
+  "source": "rule-based"
+}
+```
+
+## Project Structure
 ```text
 VectoSpace/
-├── app.py                        # Main Streamlit application (UI + orchestration)
-├── agent/                        # 🆕 Diagnosis Engine
-│   ├── __init__.py               # Public API exports
-│   ├── prompts.py                # LLM prompt templates, few-shot examples, guardrails
-│   └── diagnosis.py              # Diagnosis Node: rule engine + LLM caller + schema validation
+├── app.py
+├── agent/
+│   ├── diagnosis.py
+│   ├── planner.py
+│   └── prompts.py
 ├── src/
+│   ├── agent/
+│   │   ├── graph.py
+│   │   ├── state.py
+│   │   └── schema.py
 │   └── ml/
-│       ├── recommender.py        # Legacy rule-based recommendation engine
-│       ├── retrain.py            # Model retraining script
-│       └── models/               # Saved artefacts (random_forest.pkl, scaler.pkl, ...)
-├── notebooks/                    # Jupyter notebooks for data analysis & experiments
-├── datasets/                     # Raw datasets
+│       ├── train.py
+│       ├── retrain.py
+│       ├── recommender.py
+│       └── utils.py
+├── rag/
+│   ├── retriever.py
+│   └── vectorstore_setup.py
+├── extensions/
+│   ├── quiz_generator.py
+│   └── pdf_export.py
+├── datasets/
+├── model_artifacts/
+├── notebooks/
 ├── requirements.txt
 └── README.md
 ```
 
----
-
 ## Setup & Installation
-
 ```bash
-# 1. Clone the repository
-git clone https://github.com/Hariksh/VectoSpace.git
+git clone https://github.com/crazylogic03/VectoSpace.git
 cd VectoSpace
 
-# 2. Create and activate a virtual environment
 python3 -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
+source venv/bin/activate
 
-# 3. Install dependencies
-pip install streamlit pandas numpy scikit-learn matplotlib seaborn
-
-# Optional — for LLM-powered Diagnosis:
-pip install google-generativeai   # for Gemini
-pip install openai                 # for GPT-4o
+pip install -r requirements.txt
 ```
 
----
-
-## Running the App
-
-```bash
-streamlit run app.py
+### API Keys
+```env
+GROQ_API_KEY="..."
+GEMINI_API_KEY="..."
+OPENAI_API_KEY="..."
 ```
 
-Open [http://localhost:8501](http://localhost:8501) in your browser.
+## End-to-End Walkthrough
+- **Ingestion**: Upload dataset
+- **Projection**: Predict grades
+- **Diagnosis**: Identify gaps
+- **Intervention**:
+  - RAG retrieval
+  - Study plan
+- **Assessment**: Quiz generation
+- **Coaching**: AI chat
+- **Certification**: PDF export
 
----
+## Expected CSV Columns
+| Column | Description |
+| :--- | :--- |
+| `student_id` | Optional |
+| `student_name` | Optional |
+| `attendance_percentage` | % |
+| `study_hours` | Weekly |
+| `math_score` | Marks |
+| `science_score` | Marks |
+| `english_score` | Marks |
+| `internet_access` | Yes/No |
+| `extra_activities` | Yes/No |
+| `travel_time` | Duration |
+| `parent_education` | Level |
+| `gender` | Category |
 
-## Usage
+## Reliability & Guardrails
+- Rule-based fallback
+- Schema validation
+- No data persistence
+- Controlled outputs
 
-1. **Upload** a CSV containing student records (see column guide below).
-2. **Configure goals** in the sidebar — one goal per line (e.g. *"Score ≥ 65 in all subjects"*).
-3. *(Optional)* **Enable LLM Diagnosis** in the sidebar — requires `GEMINI_API_KEY` or `OPENAI_API_KEY` in your environment.
-4. View the **Overview** tab for batch metrics and charts.
-5. Use **Student Diagnosis** to search by name, ID, or row number and see the full diagnosis report.
-6. **Download** predictions as CSV or individual student reports as JSON.
+## Outputs
+- Grade prediction
+- Performance category
+- Diagnosis
+- Recommendations
+- Study plan
+- Quiz
+- PDF report
 
-### Expected CSV Columns
-
-| Column | Type | Description |
-|---|---|---|
-| `student_id` | string | Unique student identifier (optional) |
-| `student_name` | string | Student name (optional) |
-| `attendance_percentage` | float | Attendance % (0–100) |
-| `study_hours` | float | Weekly self-study hours |
-| `math_score` | int | Mathematics score (0–100) |
-| `science_score` | int | Science score (0–100) |
-| `english_score` | int | English score (0–100) |
-| `internet_access` | yes/no | Internet access at home |
-| `extra_activities` | yes/no | Participation in extra-curricular activities |
-| `travel_time` | string | `<15 min`, `15-30 min`, `30-60 min`, `>60 min` |
-| `parent_education` | string | `no formal`, `high school`, `diploma`, `graduate`, `post graduate`, `phd` |
-| `gender` | string | `male` / `female` / other |
-
----
-
-## 🧠 Diagnosis Engine (agent/)
-
-### Architecture
-
-```
-student_goals + performance_data
-        │
-        ▼
-┌─────────────────────────┐
-│   run_diagnosis_node()  │
-│                         │
-│  1. Rule-based engine   │  ← always runs (fast, deterministic)
-│  2. Prompt builder      │  ← few-shot + guardrails
-│  3. LLM caller          │  ← Gemini → OpenAI → skip
-│  4. JSON validator      │  ← schema + allow-list checks
-└─────────────────────────┘
-        │
-        ▼
-   DiagnosisReport
-```
-
-### Prompt Strategy
-
-**`agent/prompts.py`** implements a multi-layer prompt safety strategy:
-
-| Strategy | Implementation |
-|---|---|
-| **Role priming** | System prompt defines model as an "expert educational diagnostician" |
-| **Schema enforcement** | Exact JSON structure specified with types; model told to output JSON only |
-| **Few-shot prompting** | 2 labelled examples: one At-Risk (4 gaps), one High-Performing (empty gaps) |
-| **Negative anchoring** | High-Performing example teaches model to output `[]` gaps — not hallucinate problems |
-| **Guardrails** | 4 rules: no fabrication, empty gaps when clean, `INSUFFICIENT_DATA` sentinel, 2–4 recs |
-| **Uncertainty hedging** | `confidence_score` penalised for missing data fields |
-
-### DiagnosisReport Schema
-
-```json
-{
-  "student_id":        "STU007",
-  "student_name":      "Dev Patel",
-  "overall_status":    "At-Risk",
-  "predicted_grade":   "Grade 1",
-  "goal_alignment":    "Misaligned",
-  "learning_gaps": [
-    {
-      "area":            "Mathematics",
-      "severity":        "Critical",
-      "evidence":        "Math score is 35, 25 points below goal of 60.",
-      "recommendations": ["...", "...", "..."]
-    }
-  ],
-  "strengths":        ["Science score of 68 meets or approaches goal."],
-  "priority_actions": ["[Critical] Address Attendance: ..."],
-  "confidence_score":  0.9,
-  "diagnosis_notes":   "Dev Patel has 4 identified gaps ...",
-  "source":            "rule-based"
-}
-```
-
----
-
-## Machine Learning
-
-The core prediction uses a **Random Forest classifier** located at `src/ml/models/random_forest.pkl`.  
-Training features are listed in `src/ml/models/feature_names.pkl`.  
-During inference, missing columns are filled with `0` to prevent feature-mismatch errors.
-
----
-
-## LLM Configuration (Optional)
-
-Set one of the following environment variables to enable LLM-powered diagnosis:
-
-```bash
-export GEMINI_API_KEY="your-gemini-api-key"   # Google Gemini (preferred)
-# or
-export OPENAI_API_KEY="your-openai-key"        # OpenAI GPT-4o
-```
-
-If neither key is set, the app falls back seamlessly to the deterministic rule-based engine — **no crash, no error**.
+*Built for the future of personalized education.*

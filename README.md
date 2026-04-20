@@ -4,25 +4,25 @@ VectoSpace is a production-grade educational intelligence platform that transfor
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
 | Feature                      | Description                                                                             | Tech Stack                    |
 | :--------------------------- | :-------------------------------------------------------------------------------------- | :---------------------------- |
-| **📊 Academic Prediction**   | Classifies student performance (Grade 0–5) using Random Forest.                         | Scikit-Learn, Pandas          |
-| **📈 Status Classification** | At-Risk → Below-Average → Average → Above-Average → High-Performing → Exceptional       | Rule-based                    |
-| **🧠 Agentic Diagnosis**     | LLM-powered (or rule-based) learning gap analysis against student goals                 | LangGraph, Groq/Gemini/GPT-4o |
-| **🎯 Goal Alignment**        | Determines if a student is Aligned / Partially Aligned / Misaligned with their goals    | Rule + LLM                    |
-| **⚠️ Severity Scoring**      | Gaps rated Critical / Moderate / Minor with evidence and recommendations                | Rule + LLM                    |
-| **📊 Confidence Score**      | Data completeness score penalised for missing key fields                                | Rule-based                    |
-| **🔍 RAG Discovery**         | Semantic search across educational datasets to find targeted learning materials.        | FAISS, Sentence-Transformers  |
-| **📅 Study Planner**         | Generates structured, multi-week study calendars tailored to student gaps.              | LangGraph                     |
-| **📝 Practice Quizzes**      | AI-generated interactive assessments based on identified gaps and RAG resources.        | Llama-3.1, Streamlit          |
-| **💬 AI Coach Chat**         | Conversational interface for students to interact with their diagnosis and study plans. | Groq (Llama-3.1-8B)           |
-| **📦 Professional Exports**  | Automated PDF generation of comprehensive student success reports.                      | FPDF                          |
+| **Academic Prediction**   | Classifies student performance (Grade 0–5) using Random Forest.                         | Scikit-Learn, Pandas          |
+| **Status Classification** | At-Risk → Below-Average → Average → Above-Average → High-Performing → Exceptional       | Rule-based                    |
+| **Agentic Diagnosis**     | LLM-powered (or rule-based) learning gap analysis against student goals                 | LangGraph, Groq/Gemini/GPT-4o |
+| **Goal Alignment**        | Determines if a student is Aligned / Partially Aligned / Misaligned with their goals    | Rule + LLM                    |
+| **Severity Scoring**      | Gaps rated Critical / Moderate / Minor with evidence and recommendations                | Rule + LLM                    |
+| **Confidence Score**      | Data completeness score penalised for missing key fields                                | Rule-based                    |
+| **RAG Discovery**         | Semantic search across educational datasets to find targeted learning materials.        | FAISS, Sentence-Transformers  |
+| **Study Planner**         | Generates structured, multi-week study calendars tailored to student gaps.              | LangGraph                     |
+| **Practice Quizzes**      | AI-generated interactive assessments based on identified gaps and RAG resources.        | Llama-3.1, Streamlit          |
+| **AI Coach Chat**         | Conversational interface for students to interact with their diagnosis and study plans. | Groq (Llama-3.1-8B)           |
+| **Professional Exports**  | Automated PDF generation of comprehensive student success reports.                      | FPDF                          |
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 VectoSpace implements a sophisticated **Agentic Workflow** using `LangGraph`.
 
@@ -47,7 +47,7 @@ graph TD
 - **Vector Store**: FAISS index containing curated educational resources for RAG-driven recommendations.
 - **Orchestrator**: LangGraph manages the state transition from raw performance data to a validated Pydantic FinalReport.
 
-## 🧠 Diagnosis Engine
+## Diagnosis Engine
 ```text
 student_goals + performance_data
         ↓
@@ -60,7 +60,7 @@ Schema Validation
 Diagnosis Report
 ```
 
-## 🔐 Prompt Strategy
+## Prompt Strategy
 
 `agent/prompts.py` implements a multi-layer prompt safety strategy:
 
@@ -73,7 +73,7 @@ Diagnosis Report
 | Guardrails | Prevent hallucination, enforce structure |
 | Uncertainty hedging | `confidence_score` penalised for missing data |
 
-## 📄 DiagnosisReport Schema
+## DiagnosisReport Schema
 ```json
 {
   "student_id": "STU007",
@@ -97,7 +97,7 @@ Diagnosis Report
 }
 ```
 
-## 📂 Project Structure
+## Project Structure
 ```text
 VectoSpace/
 ├── app.py
@@ -144,7 +144,7 @@ GEMINI_API_KEY="..."
 OPENAI_API_KEY="..."
 ```
 
-## 📖 End-to-End Walkthrough
+## End-to-End Walkthrough
 - **Ingestion**: Upload dataset
 - **Projection**: Predict grades
 - **Diagnosis**: Identify gaps
@@ -155,7 +155,7 @@ OPENAI_API_KEY="..."
 - **Coaching**: AI chat
 - **Certification**: PDF export
 
-## 📥 Expected CSV Columns
+## Expected CSV Columns
 | Column | Description |
 | :--- | :--- |
 | `student_id` | Optional |
@@ -171,13 +171,13 @@ OPENAI_API_KEY="..."
 | `parent_education` | Level |
 | `gender` | Category |
 
-## 🛡️ Reliability & Guardrails
+## Reliability & Guardrails
 - Rule-based fallback
 - Schema validation
 - No data persistence
 - Controlled outputs
 
-## 📦 Outputs
+## Outputs
 - Grade prediction
 - Performance category
 - Diagnosis

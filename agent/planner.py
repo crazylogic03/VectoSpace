@@ -18,8 +18,8 @@ OUTPUT CONTRACT:
 1. Respond with VALID JSON ONLY.
 2. The JSON must have the following keys:
    - "executive_summary": A high-level overview of the plan.
-   - "identified_learning_gaps": A list of gaps being addressed.
-   - "recommended_resources": A list of specific resource titles being used.
+   - "identified_learning_gaps": A list of PLAIN STRINGS (e.g., ["Algebra Foundations", "Attendance Habits"]). Do NOT return objects or dictionaries here.
+   - "recommended_resources": A list of PLAIN TEXT Resource Titles (e.g., ["Khan Academy", "Purdue OWL"]). Do NOT return objects or dictionaries here.
    - "multi_step_study_plan": A list of steps, each with "step" (int), "title", and "activities" (list of strings).
    - "weekly_goals": A dictionary (e.g., {"week_1": "...", "week_2": "..."}).
 

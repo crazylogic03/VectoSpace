@@ -55,7 +55,8 @@ def generate_personalized_quiz(gaps: List[Dict], resources: List[Dict], grade: s
     gemini_key = os.getenv("GEMINI_API_KEY")
 
     gaps_context = json.dumps(gaps, indent=2)
-    res_context = json.dumps([{"title": r.get("title"), "summary": r.get("summary")} for r in resources[:3]], indent=2)
+    safe_resources = resources if resources is not None else []
+    res_context = json.dumps([{"title": r.get("title"), "summary": r.get("summary")} for r in safe_resources[:3]], indent=2)
     user_content = f"GRADE: {grade}\nGAPS: {gaps_context}\nRESOURCES: {res_context}"
     
     messages = [

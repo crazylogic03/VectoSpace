@@ -22,12 +22,10 @@ class PDFExportExtension:
         file_path_md = os.path.join(self.export_dir, f"Study_Plan_{safe_name}.md")
         file_path_pdf = os.path.join(self.export_dir, f"Study_Plan_{safe_name}.pdf")
         
-        # Save MD copy
         with open(file_path_md, "w", encoding="utf-8") as f:
             f.write(f"# Personalized Study Plan for {student_name} ({student_id})\n\n")
             f.write(study_plan_md)
 
-        # Generate True PDF Document
         if HAS_FPDF:
             pdf = FPDF()
             pdf.add_page()
@@ -36,13 +34,10 @@ class PDFExportExtension:
             pdf.ln(10)
             
             pdf.set_font('helvetica', '', 11)
-            # Replace markdown basic tags for PDF cleanly
             lines = study_plan_md.replace('**', '').replace('##', '').replace('#', '').split('\n')
             for line in lines:
-                # Strip non-latin to avoid font exceptions
                 line_safe = line.encode('ascii', 'ignore').decode('ascii')
                 if line_safe.strip():
-                    # Break any words longer than 80 chars (like URLs or `----`) to prevent page wrapper crash
                     words = line_safe.split(" ")
                     safe_words = []
                     for w in words:

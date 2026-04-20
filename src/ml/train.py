@@ -8,7 +8,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix, ConfusionMatrixDisplay
 from sklearn.model_selection import cross_val_score, StratifiedKFold
 
-# Configure Paths
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 TRAIN_PATH = os.path.join(SCRIPT_DIR, "..", "..", "datasets", "train_cleaned.csv")
 TEST_PATH = os.path.join(SCRIPT_DIR, "..", "..", "datasets", "test_cleaned.csv")
@@ -55,7 +54,6 @@ def main():
     X_test = test_df.drop(columns=[target_col])
     y_test = test_df[target_col]
     
-    # Model
     model = RandomForestClassifier(n_estimators=100, random_state=42, class_weight="balanced", n_jobs=-1)
     
     print("Performing 5-Fold Cross Validation...")
@@ -75,11 +73,9 @@ def main():
     print("Classification Report:")
     print(classification_report(y_test, y_pred, target_names=target_names, zero_division=0))
     
-    # Save visualizations
     plot_feature_importance(model, X_train.columns, os.path.join(MODEL_DIR, "feature_importance.png"))
     plot_confusion_matrix(y_test, y_pred, labels, os.path.join(MODEL_DIR, "confusion_matrix.png"))
     
-    # Save model
     rf_path = os.path.join(MODEL_DIR, "random_forest.pkl")
     with open(rf_path, "wb") as f:
         pickle.dump(model, f)

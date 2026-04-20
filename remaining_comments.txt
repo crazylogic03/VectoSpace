@@ -1,0 +1,189 @@
+Binary file ./model_artifacts/feature_importance.png matches
+Binary file ./model_artifacts/random_forest.pkl matches
+./.pytest_cache/CACHEDIR.TAG:# This file is a cache directory tag created by pytest.
+./.pytest_cache/CACHEDIR.TAG:# For information about cache directory tags, see:
+./.pytest_cache/CACHEDIR.TAG:#	https://bford.info/cachedir/spec.html
+./.pytest_cache/README.md:# pytest cache directory #
+./.pytest_cache/.gitignore:# Created by pytest automatically.
+./tests/test_preprocessing.py:# Add root folder to sys.path
+Binary file ./VectorSpace.pdf matches
+Binary file ./agent/__pycache__/planner.cpython-311.pyc matches
+./agent/prompts.py:# ─────────────────────────────────────────────────────────────────────────────
+./agent/prompts.py:# SYSTEM PROMPT
+./agent/prompts.py:# ─────────────────────────────────────────────────────────────────────────────
+./agent/prompts.py:# ─────────────────────────────────────────────────────────────────────────────
+./agent/prompts.py:# FEW-SHOT EXAMPLES
+./agent/prompts.py:# ─────────────────────────────────────────────────────────────────────────────
+./agent/prompts.py:# Each example is a (user_message, assistant_response) pair.
+./agent/prompts.py:# Including a "strong student" example teaches the model to produce empty
+./agent/prompts.py:# gap lists rather than inventing problems.
+./agent/prompts.py:    # ── Example 1: At-Risk student with clear gaps ────────────────────────
+./agent/prompts.py:    # ── Example 2: High-Performing student – no gaps ──────────────────────
+./agent/prompts.py:# ─────────────────────────────────────────────────────────────────────────────
+./agent/prompts.py:# PROMPT BUILDER
+./agent/prompts.py:# ─────────────────────────────────────────────────────────────────────────────
+./agent/prompts.py:    # Format the student goals block
+./agent/prompts.py:    # Sanitise the performance data dict for serialisation
+./agent/prompts.py:    # Assemble messages list
+./agent/prompts.py:    # Inject few-shot examples
+./agent/prompts.py:    # Append the live request
+./agent/prompts.py:# ─────────────────────────────────────────────────────────────────────────────
+./agent/prompts.py:# QUICK SELF-TEST
+./agent/prompts.py:# ─────────────────────────────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:# ─────────────────────────────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:# CONFIGURATION
+./rag/vectorstore_setup.py:# ─────────────────────────────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:# ─────────────────────────────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:# CORPUS  — curated educational resources
+./rag/vectorstore_setup.py:#
+./rag/vectorstore_setup.py:# Each document is a dict with the following keys:
+./rag/vectorstore_setup.py:#   title   : human-readable resource name
+./rag/vectorstore_setup.py:#   url     : canonical link to the resource
+./rag/vectorstore_setup.py:#   domain  : one or more subject areas this resource covers
+./rag/vectorstore_setup.py:#   summary : 1-2 sentence description used as the embedding text *and*
+./rag/vectorstore_setup.py:#             returned to the student as the resource synopsis
+./rag/vectorstore_setup.py:# ─────────────────────────────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:    # ── Mathematics ───────────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:    # ── Science ───────────────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:    # ── English / Language Arts ───────────────────────────────────────────────
+./rag/vectorstore_setup.py:    # ── Attendance / Time Management ──────────────────────────────────────────
+./rag/vectorstore_setup.py:    # ── General Academic Skills ───────────────────────────────────────────────
+./rag/vectorstore_setup.py:# ─────────────────────────────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:# EMBEDDING BACKEND  (SentenceTransformers → TF-IDF fallback)
+./rag/vectorstore_setup.py:# ─────────────────────────────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:# ─────────────────────────────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:# FAISS / NUMPY INDEX
+./rag/vectorstore_setup.py:# ─────────────────────────────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:        # L2-normalise so inner-product == cosine similarity
+./rag/vectorstore_setup.py:        # Manual L2 normalisation
+./rag/vectorstore_setup.py:# ─────────────────────────────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:# PUBLIC API
+./rag/vectorstore_setup.py:# ─────────────────────────────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:    # ── Load from cache if available ──────────────────────────────────────────
+./rag/vectorstore_setup.py:    # ── Build embeddings ──────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:    # Compose embedding text: title + domain keywords + summary
+./rag/vectorstore_setup.py:    # ── Build index ───────────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:    # ── Persist to disk ───────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:        # Don't pickle the numpy matrix version of faiss — just store it all
+./rag/vectorstore_setup.py:            # Documents are plain dicts — safe to JSON-serialise
+./rag/vectorstore_setup.py:    # ── Embed the query ───────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:        # TF-IDF path: embedder is (vectoriser, corpus_matrix) tuple
+./rag/vectorstore_setup.py:    # ── Search index ──────────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:        # numpy or tfidf dot-product
+./rag/vectorstore_setup.py:    # ── Filter and format ─────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:# ─────────────────────────────────────────────────────────────────────────────
+./rag/vectorstore_setup.py:# QUICK SELF-TEST
+./rag/vectorstore_setup.py:# ─────────────────────────────────────────────────────────────────────────────
+./rag/__init__.py:    # Plug into the LangGraph AgentState after the Diagnosis Node
+./rag/__init__.py:    # result["resources"] → list[dict] with title, url, summary, gap, severity, score
+Binary file ./rag/__pycache__/__init__.cpython-311.pyc matches
+./extensions/pdf_export.py:        # Save MD copy
+./extensions/pdf_export.py:        # Generate True PDF Document
+./extensions/pdf_export.py:            # Replace markdown basic tags for PDF cleanly
+./extensions/pdf_export.py:                # Strip non-latin to avoid font exceptions
+./extensions/pdf_export.py:                    # Break any words longer than 80 chars (like URLs or `----`) to prevent page wrapper crash
+./README.md:# 🎓 VectoSpace · Student Performance Predictor + Diagnosis Engine
+./README.md:## Overview
+./README.md:### Core Features
+./README.md:## Project Structure
+./README.md:## Setup & Installation
+./README.md:# 1. Clone the repository
+./README.md:# 2. Create and activate a virtual environment
+./README.md:# 3. Install dependencies
+./README.md:# Optional — for LLM-powered Diagnosis:
+./README.md:## Running the App
+./README.md:## Usage
+./README.md:### Expected CSV Columns
+./README.md:## 🧠 Diagnosis Engine (agent/)
+./README.md:### Architecture
+./README.md:### Prompt Strategy
+./README.md:### DiagnosisReport Schema
+./README.md:## Machine Learning
+./README.md:## LLM Configuration (Optional)
+./README.md:# or
+./exports/Study_Plan_NA_Student.md:# Personalized Study Plan for N/A (Student)
+./exports/Study_Plan_NA_Student.md:# Study Plan Executive Summary
+./exports/Study_Plan_NA_Student.md:## Identified Learning Gaps
+./exports/Study_Plan_NA_Student.md:## Recommended Resources
+./exports/Study_Plan_NA_Student.md:## Multi-Step Study Plan
+./exports/Study_Plan_NA_Student.md:### Step 1: Review Basics
+./exports/Study_Plan_NA_Student.md:### Step 2: Practice Problems
+./exports/Study_Plan_NA_Student.md:## Weekly Goals
+./exports/Study_Plan_INSUFFICIENT_DATA_2.md:# Personalized Study Plan for INSUFFICIENT_DATA (2)
+./exports/Study_Plan_INSUFFICIENT_DATA_2.md:# Study Plan Executive Summary
+./exports/Study_Plan_INSUFFICIENT_DATA_2.md:## Identified Learning Gaps
+./exports/Study_Plan_INSUFFICIENT_DATA_2.md:## Recommended Resources
+./exports/Study_Plan_INSUFFICIENT_DATA_2.md:## Multi-Step Study Plan
+./exports/Study_Plan_INSUFFICIENT_DATA_2.md:### Step 1: Developing Effective Study Habits
+./exports/Study_Plan_INSUFFICIENT_DATA_2.md:### Step 2: Improving Mathematics Skills
+./exports/Study_Plan_INSUFFICIENT_DATA_2.md:### Step 3: Enhancing Academic Writing Skills
+./exports/Study_Plan_INSUFFICIENT_DATA_2.md:## Weekly Goals
+./exports/Study_Plan_INSUFFICIENT_DATA_1.md:# Personalized Study Plan for INSUFFICIENT_DATA (1)
+./exports/Study_Plan_INSUFFICIENT_DATA_1.md:# Study Plan Executive Summary
+./exports/Study_Plan_INSUFFICIENT_DATA_1.md:## Identified Learning Gaps
+./exports/Study_Plan_INSUFFICIENT_DATA_1.md:## Recommended Resources
+./exports/Study_Plan_INSUFFICIENT_DATA_1.md:## Multi-Step Study Plan
+./exports/Study_Plan_INSUFFICIENT_DATA_1.md:### Step 1: Step 1: Develop Effective Study Techniques
+./exports/Study_Plan_INSUFFICIENT_DATA_1.md:### Step 2: Improve Reading Comprehension and Analytical Skills
+./exports/Study_Plan_INSUFFICIENT_DATA_1.md:### Step 3: Increase Study Time and Attendance
+./exports/Study_Plan_INSUFFICIENT_DATA_1.md:## Weekly Goals
+./exports/Study_Plan_NA_1.md:# Personalized Study Plan for N/A (1)
+./exports/Study_Plan_NA_1.md:# Study Plan Executive Summary
+./exports/Study_Plan_NA_1.md:## Identified Learning Gaps
+./exports/Study_Plan_NA_1.md:## Recommended Resources
+./exports/Study_Plan_NA_1.md:## Multi-Step Study Plan
+./exports/Study_Plan_NA_1.md:### Step 1: Step 1: Increase Study Time and Improve Study Habits
+./exports/Study_Plan_NA_1.md:### Step 2: Step 2: Improve Mathematics and Science Scores
+./exports/Study_Plan_NA_1.md:### Step 3: Step 3: Develop Effective Study Habits
+./exports/Study_Plan_NA_1.md:## Weekly Goals
+./scratch/clean_code_aggressive.py:    # Remove docstrings (triple quotes)
+./scratch/clean_code_aggressive.py:    # This is a bit risky if docstrings are used for something else, but usually they are just comments.
+./scratch/clean_code_aggressive.py:        # Strip trailing comments but preserve hex codes in strings
+./scratch/clean_code_aggressive.py:        # Simple string tracking
+./scratch/clean_code_aggressive.py:        # Only add non-empty lines if they were not just comments
+./scratch/clean_code_aggressive.py:        # But we want to keep structure, so let's keep empty lines but not too many
+./scratch/clean_code_aggressive.py:    # Remove consecutive empty lines
+./scratch/verify_groq.py:# Load .env
+./scratch/clean_code.py:    # Strategy: 
+./scratch/clean_code.py:    # 1. Protect multiline strings
+./scratch/clean_code.py:    # 2. Remove single line comments (#) but NOT inside strings or hex colors
+./scratch/clean_code.py:        # If the line is JUST a comment, remove it
+./scratch/clean_code.py:        # If it has a comment at the end, be careful
+./scratch/clean_code.py:        # We look for # that is NOT preceded by ' or " and NOT followed by 3 or 6 hex digits at the end of a string
+./scratch/clean_code.py:        # Actually, a simpler way: if the line has a #, find its position.
+./scratch/clean_code.py:        # But only if it's not inside a string.
+./scratch/clean_code.py:                    # Check for escaping? (simple version)
+./scratch/clean_code.py:                # Potential comment. Check if it's a hex code in a string?
+./scratch/clean_code.py:                # Actually, if not in_string, it MUST be a comment unless I'm missing something 
+./scratch/clean_code.py:                # (like a raw string or something).
+./scratch/clean_code.py:                # But hex codes ARE inside strings in Python code.
+./.gitignore:# Python
+./.gitignore:# Environments
+./.gitignore:# ML/Binary Artifacts
+./.gitignore:# OS
+./.gitignore:# Project Specific
+./src/agent/graph.py:# --- MOCK NODES FOR DEVELOPMENT ---
+./src/agent/graph.py:# Developer 2 will implement the real diagnosis logic
+./src/agent/graph.py:# --- REAL RAG RETRIEVAL NODE (Developer 3) ---
+./src/agent/graph.py:        # Not standard here, fallback safety
+./src/agent/graph.py:    # Pre-process study_plan_metadata to ensure its lists are flat strings
+./src/agent/graph.py:                        # Use 'area' or 'title' if present, else just str(item)
+./src/agent/graph.py:    # 1. Add Nodes
+./src/agent/graph.py:    # 2. Add Edges (Linear Flow)
+./src/agent/graph.py:    # 3. Setup checkpointer for memory
+./src/agent/graph.py:    # 4. Compile the graph
+./src/ml/retrain.py:#Load data
+./src/ml/retrain.py:#Train Random Forest
+./src/ml/train.py:# Configure Paths
+./src/ml/train.py:    # Model
+./src/ml/train.py:    # Save visualizations
+./src/ml/train.py:    # Save model
+./src/ml/recommender.py:    # 1. Base recommendations on Predicted Category
+./src/ml/recommender.py:    # 2. Rule-based recommendations based on specific features
+./src/ml/recommender.py:    # Analyze individual subject scores if available (assuming scores are out of 100 or standardized)
+./src/ml/recommender.py:    # Using relative low thresholds
+./src/ml/recommender.py:    # Example usage:
+./src/main.py:    # Define the initial inputs for the state
+./src/main.py:    # Invoke the graph
+./src/main.py:    # Example usage mimicking a student interaction
+./src/main.py:    # Simulated input from the Frontend/User

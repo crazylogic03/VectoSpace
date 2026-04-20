@@ -13,7 +13,6 @@ def generate_recommendations(student_data: dict, predicted_category: str) -> lis
     """
     recommendations = []
     
-    # 1. Base recommendations on Predicted Category
     if "Grade 0" in predicted_category or "Grade 1" in predicted_category or "At-Risk" in predicted_category:
         recommendations.append("Priority: Schedule a 1-on-1 session with an academic counselor or mentor.")
         recommendations.append("Action: Break down study materials into smaller, manageable 30-minute sessions.")
@@ -24,15 +23,12 @@ def generate_recommendations(student_data: dict, predicted_category: str) -> lis
         recommendations.append("Priority: Keep up the excellent work!")
         recommendations.append("Action: Consider participating in advanced workshops or tutoring peers.")
         
-    # 2. Rule-based recommendations based on specific features
     if student_data.get("attendance_percentage", 100) < 75:
         recommendations.append("Warning: Low attendance detected. Aim to attend at least 85% of classes to catch up on missed concepts.")
         
     if student_data.get("study_hours", 10) < 5:
         recommendations.append("Suggestion: Increase self-study time. Aim for at least 1-2 hours of focused study daily.")
         
-    # Analyze individual subject scores if available (assuming scores are out of 100 or standardized)
-    # Using relative low thresholds
     weak_subjects = []
     if student_data.get("math_score", 100) < 50:
         weak_subjects.append("Math")
@@ -54,7 +50,6 @@ def generate_recommendations(student_data: dict, predicted_category: str) -> lis
     return recommendations
 
 if __name__ == "__main__":
-    # Example usage:
     sample_student = {
         "attendance_percentage": 65,
         "study_hours": 3,

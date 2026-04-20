@@ -4,7 +4,6 @@ def run_interaction(session_id: str, goals: str, perf_data: dict):
     print(f"\n--- Starting Session: {session_id} ---")
     config = {"configurable": {"thread_id": session_id}}
     
-    # Define the initial inputs for the state
     initial_state = {
         "messages": [],
         "student_goals": goals,
@@ -15,7 +14,6 @@ def run_interaction(session_id: str, goals: str, perf_data: dict):
         "final_report": None
     }
     
-    # Invoke the graph
     print("Invoking Agentic Study Coach...")
     result = agent_app.invoke(initial_state, config=config)
     
@@ -27,10 +25,8 @@ def run_interaction(session_id: str, goals: str, perf_data: dict):
     print("------------------------\n")
 
 if __name__ == "__main__":
-    # Example usage mimicking a student interaction
     student_id = "student_123"
     
-    # Simulated input from the Frontend/User
     mock_goals = "I want to prepare for my End-Sem exam in Advanced Mathematics."
     mock_perf = {"quiz_1_score": 45, "quiz_2_score": 60, "weak_areas": ["integration"]}
     

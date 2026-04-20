@@ -1,0 +1,226 @@
+[
+  {
+    "title": "Khan Academy – Mathematics",
+    "url": "https://www.khanacademy.org/math",
+    "domain": [
+      "Mathematics",
+      "math"
+    ],
+    "summary": "Free, self-paced video lessons and practice exercises covering arithmetic, algebra, geometry, trigonometry, and calculus."
+  },
+  {
+    "title": "Paul's Online Math Notes",
+    "url": "https://tutorial.math.lamar.edu/",
+    "domain": [
+      "Mathematics",
+      "math",
+      "calculus",
+      "algebra"
+    ],
+    "summary": "Comprehensive, exam-friendly notes and worked examples for Algebra, Calculus I–III, Differential Equations, and Linear Algebra."
+  },
+  {
+    "title": "Brilliant – Math Courses",
+    "url": "https://brilliant.org/courses/math/",
+    "domain": [
+      "Mathematics",
+      "math",
+      "problem solving"
+    ],
+    "summary": "Interactive problem-solving courses in mathematics and logic teaching reasoning rather than rote memorisation."
+  },
+  {
+    "title": "MIT OpenCourseWare – Mathematics",
+    "url": "https://ocw.mit.edu/courses/mathematics/",
+    "domain": [
+      "Mathematics",
+      "math",
+      "linear algebra",
+      "calculus"
+    ],
+    "summary": "Free MIT lecture notes, assignments, and exams for undergraduate mathematics courses."
+  },
+  {
+    "title": "Wolfram MathWorld",
+    "url": "https://mathworld.wolfram.com/",
+    "domain": [
+      "Mathematics",
+      "math",
+      "reference"
+    ],
+    "summary": "Extensive mathematics encyclopedia covering definitions, theorems, and examples across all branches of mathematics."
+  },
+  {
+    "title": "Khan Academy – Science",
+    "url": "https://www.khanacademy.org/science",
+    "domain": [
+      "Science",
+      "physics",
+      "chemistry",
+      "biology"
+    ],
+    "summary": "Free video lessons and practice quizzes covering biology, chemistry, physics, and Earth sciences."
+  },
+  {
+    "title": "CK-12 – Science Flexbooks",
+    "url": "https://www.ck12.org/student/",
+    "domain": [
+      "Science",
+      "physics",
+      "chemistry",
+      "biology"
+    ],
+    "summary": "Open-source digital textbooks with simulations and adaptive practice for physics, chemistry, biology, and earth science."
+  },
+  {
+    "title": "PhET Interactive Science Simulations",
+    "url": "https://phet.colorado.edu/",
+    "domain": [
+      "Science",
+      "physics",
+      "chemistry"
+    ],
+    "summary": "Free, research-based science simulations for experimenting with physics, chemistry, and earth science concepts."
+  },
+  {
+    "title": "NCBI – Biology and Life Sciences Resources",
+    "url": "https://www.ncbi.nlm.nih.gov/education/",
+    "domain": [
+      "Science",
+      "biology",
+      "life sciences"
+    ],
+    "summary": "Educational resources including tutorials on genetics, genomics, and molecular biology."
+  },
+  {
+    "title": "British Council – LearnEnglish",
+    "url": "https://learnenglish.britishcouncil.org/",
+    "domain": [
+      "English",
+      "language",
+      "grammar",
+      "writing"
+    ],
+    "summary": "Free English learning resources: grammar, listening, reading passages, and writing guides."
+  },
+  {
+    "title": "Purdue OWL – Writing and Grammar",
+    "url": "https://owl.purdue.edu/owl/general_writing/",
+    "domain": [
+      "English",
+      "writing",
+      "grammar",
+      "academic writing"
+    ],
+    "summary": "Definitive reference for academic writing, grammar rules, citation formats, and essay structure."
+  },
+  {
+    "title": "BBC Learning English",
+    "url": "https://www.bbc.co.uk/learningenglish/",
+    "domain": [
+      "English",
+      "language",
+      "vocabulary",
+      "listening"
+    ],
+    "summary": "Daily grammar tips, vocabulary lessons, and real-world English through audio and video content."
+  },
+  {
+    "title": "Project Gutenberg – Free Classic Literature",
+    "url": "https://www.gutenberg.org/",
+    "domain": [
+      "English",
+      "literature",
+      "reading"
+    ],
+    "summary": "Over 70,000 free eBooks of classic literature to improve reading comprehension and analytical skills."
+  },
+  {
+    "title": "Coursera – Learning How to Learn",
+    "url": "https://www.coursera.org/learn/learning-how-to-learn",
+    "domain": [
+      "Attendance",
+      "Study Time",
+      "habits",
+      "productivity"
+    ],
+    "summary": "Science-backed MOOC covering memory, procrastination, and effective study techniques."
+  },
+  {
+    "title": "Todoist – Student Planning Guide",
+    "url": "https://todoist.com/productivity-methods/student-study-plan",
+    "domain": [
+      "Study Time",
+      "Attendance",
+      "planning",
+      "organisation"
+    ],
+    "summary": "A practical guide to building a structured weekly study timetable and maintaining academic momentum."
+  },
+  {
+    "title": "Forest App – Focus & Study Timer",
+    "url": "https://www.forestapp.cc/",
+    "domain": [
+      "Study Time",
+      "focus",
+      "productivity"
+    ],
+    "summary": "Gamified Pomodoro timer app that helps students stay focused and builds sustained study habits."
+  },
+  {
+    "title": "Cal Newport – Study Strategies (Blog)",
+    "url": "https://calnewport.com/blog/",
+    "domain": [
+      "Study Time",
+      "Study habits",
+      "deep work"
+    ],
+    "summary": "Research-driven blog on deliberate practice, deep work, and effective study strategies."
+  },
+  {
+    "title": "Anki – Spaced Repetition Flashcards",
+    "url": "https://apps.ankiweb.net/",
+    "domain": [
+      "Mathematics",
+      "Science",
+      "English",
+      "general",
+      "memory"
+    ],
+    "summary": "Free flashcard software using spaced-repetition algorithms to optimise long-term memorisation."
+  },
+  {
+    "title": "OpenStax – Free Peer-reviewed Textbooks",
+    "url": "https://openstax.org/subjects",
+    "domain": [
+      "Mathematics",
+      "Science",
+      "English",
+      "general"
+    ],
+    "summary": "High-quality, peer-reviewed, openly-licensed textbooks in maths, sciences, and humanities."
+  },
+  {
+    "title": "Quizlet – Flashcards & Study Sets",
+    "url": "https://quizlet.com/",
+    "domain": [
+      "Mathematics",
+      "Science",
+      "English",
+      "general",
+      "revision"
+    ],
+    "summary": "Millions of student-created study sets with multiple learning modes for vocabulary and revision."
+  },
+  {
+    "title": "edX – University Online Courses",
+    "url": "https://www.edx.org/",
+    "domain": [
+      "Mathematics",
+      "Science",
+      "English",
+      "general"
+    ],
+    "summary": "Online courses from top universities (MIT, Harvard, etc.) accessible to all for audit."
+  }
+]
